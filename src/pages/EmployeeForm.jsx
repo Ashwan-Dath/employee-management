@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useEmployee } from '../context/EmployeeContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Upload, Save } from 'lucide-react';
+// import userIcon from '../assets/user.svg';
+import userIcon from '../assets/user.svg';
 
 const EmployeeForm = () => {
   const { id } = useParams();
@@ -80,7 +82,7 @@ const EmployeeForm = () => {
     // Use a default image if none is uploaded
     const finalData = {
       ...formData,
-      image: formData.image || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+      image: formData.image || userIcon
     };
 
     if (isEditMode) {

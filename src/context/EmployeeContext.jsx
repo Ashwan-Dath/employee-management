@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import userIcon from '../assets/user.svg';
 
 const EmployeeContext = createContext(null);
 
@@ -10,7 +11,12 @@ export const EmployeeProvider = ({ children }) => {
     useEffect(() => {
         const stored = localStorage.getItem('employees');
         if (stored) {
-            setEmployees(JSON.parse(stored));
+            const parsedEmployees = JSON.parse(stored);
+            const updatedEmployees = parsedEmployees.map(emp => ({
+                ...emp,
+                image: emp.image || userIcon
+            }));
+            setEmployees(updatedEmployees);
         } else {
             // Seed with some mock data if empty
             const mockData = [
@@ -21,7 +27,7 @@ export const EmployeeProvider = ({ children }) => {
                     dob: '1990-05-15',
                     state: 'Andhra Pradesh',
                     active: true,
-                    image: null // Placeholder or data URL
+                    image: userIcon // Placeholder or data URL
                 },
                 {
                     id: '1004',
@@ -30,7 +36,7 @@ export const EmployeeProvider = ({ children }) => {
                     dob: '1992-08-20',
                     state: 'Telangana',
                     active: true,
-                    image: null
+                    image: userIcon
                 },
                 {
                     id: '1002',
@@ -39,7 +45,7 @@ export const EmployeeProvider = ({ children }) => {
                     dob: '2002-08-20',
                     state: 'Kerala',
                     active: false,
-                    image: null
+                    image: userIcon
                 },
                 {
                     id: '1005',
@@ -48,7 +54,7 @@ export const EmployeeProvider = ({ children }) => {
                     dob: '1999-08-20',
                     state: 'Karnataka',
                     active: true,
-                    image: null
+                    image: userIcon
                 },
                 {
                     id: '1008',
@@ -57,7 +63,7 @@ export const EmployeeProvider = ({ children }) => {
                     dob: '20001-08-20',
                     state: 'Tamil Nadu',
                     active: false,
-                    image: null
+                    image: userIcon
                 },
             ];
             setEmployees(mockData);
@@ -76,7 +82,7 @@ export const EmployeeProvider = ({ children }) => {
     const addEmployee = (employee) => {
         // Generate a 5-digit random ID
         const newId = Math.floor(1003 + Math.random() * 9000).toString();
-        const newEmployee = { ...employee, id: newId };
+        const newEmployee = { ...employee, id: newId, image: employee.image || userIcon };
         setEmployees([...employees, newEmployee]);
     };
 
